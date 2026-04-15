@@ -30,22 +30,31 @@
 
 
 const calculateBtn = document.getElementById('calculate-bmi')
-let userHeight = document.getElementById('height-in-cm')
-let userWeight = document.getElementById('weight-in-kg')
+const userHeight = document.getElementById('height-in-cm')
+const userWeight = document.getElementById('weight-in-kg')
 const showBmi = document.getElementById('calculatedBmi')
-let message = 'please enter correct details'
+let message;
 
 
 calculateBtn.addEventListener('click',()=>{
+    message = 'please enter correct details'
+let userHeightValue = userHeight.value.trim();
+let userWeightValue = userWeight.value.trim();
+  userHeight.value=''
+  userWeight.value =''
+  if(userHeightValue === "" || userWeightValue === "" || isNaN(userHeightValue) || isNaN(userWeightValue) ){
+    showBmi.innerText = `${message}`
+
+    return;
+  }
+  userHeightValue = Number(userHeightValue)
+  userWeightValue = Number(userWeightValue)
+
+  console.log(userHeightValue,userWeightValue);
 
 
-  userHeight = Number(userHeight.value)
-  userWeight = Number(userWeight.value)
-  console.log(userHeight,userWeight);
-  
 
-
-let calculateBmi = (userWeight / (userHeight*userHeight))*10000;
+let calculateBmi = (userWeightValue / (userHeightValue*userHeightValue))*10000;
 console.log(calculateBmi);
 
 
@@ -60,8 +69,7 @@ message = 'you are overweight'
 showBmi.innerText = `${message} Your Calculated BMI is ${calculateBmi}`
 
 
-userHeight.value=''
-userWeight.value =''
+
 
 })
 
