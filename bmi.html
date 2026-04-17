@@ -6,72 +6,92 @@
   <title>Calculate your BMI</title>
 </head>
 <body>
-  <label for="height-in-cm">Height in CM:</label>
-  <input type="text" id="height-in-cm">
 
+<form>
+<p>
+  <label for="height-in-cm">Height in CM:</label>  <input type="text" id="height-in-cm">
+</p>  
+<p>
   <label for="weight-in-kg">Weight in KG:</label>
   <input type="text" id="weight-in-kg">
-
-
+</p>
   <button id="calculate-bmi"> Calculate</button>
-
-
-  <p id="calculatedBmi"></p>
-
+    <p id="calculatedBmi"></p>
+    <div id="weight-guide">
   <h3> BMI Weight Guide</h3>
   <p>Under Weight = Less than 18.5</p>
   <p>Healthy Weight = 18.6 and 24.9</p>
   <p>Overweight = Greater than 24.9</p>
-
-  
+    </div>
+</form>
 
 <script>
 
+/*
+form event has submit event
+when a form is submitted the values are sent to the sever by default need to stop that
 
-
-const calculateBtn = document.getElementById('calculate-bmi')
-const userHeight = document.getElementById('height-in-cm')
-const userWeight = document.getElementById('weight-in-kg')
-const showBmi = document.getElementById('calculatedBmi')
+*/
 let message;
 
+const form = document.querySelector('form')
+form.addEventListener('submit',function(e){
+    e.preventDefault();
+    const showBmi = document.getElementById('calculatedBmi')
 
-calculateBtn.addEventListener('click',()=>{
-    message = 'please enter correct details'
-let userHeightValue = userHeight.value.trim();
-let userWeightValue = userWeight.value.trim();
-  userHeight.value=''
-  userWeight.value =''
-  if(userHeightValue === "" || userWeightValue === "" || isNaN(userHeightValue) || isNaN(userWeightValue) ){
-    showBmi.innerText = `${message}`
-
-    return;
-  }
-  userHeightValue = Number(userHeightValue)
-  userWeightValue = Number(userWeightValue)
-
-  console.log(userHeightValue,userWeightValue);
+    const userHeight = parseInt(document.getElementById('height-in-cm').value)
+    const userWeight =parseInt( document.getElementById('weight-in-kg').value)
+console.log(userHeight,userWeight);
 
 
+    if(userHeight===''|| userHeight<=0 || isNaN(userHeight)|| userWeight===''|| userWeight <=0 || isNaN(userWeight) )
+    {
+      message = 'please enter correct details'
+      document.getElementById('height-in-cm').value=''
+      document.getElementById('weight-in-kg').value =''
+      showBmi.innerText = `${message} `
+      return;
+    }
+    else{
+        let calculateBmi = ((userWeight / (userHeight*userHeight))*10000).toFixed(2);
+        console.log(calculateBmi);  
+          if (calculateBmi < 18.5)
+          message = 'you are underweight'
+          else if (calculateBmi > 18.5 && calculateBmi<= 24.9)
+          message = 'you are healthy'
+          else
+          message = 'you are overweight'
+        showBmi.innerText = `${message} Your Calculated BMI is ${calculateBmi}`
 
-let calculateBmi = (userWeightValue / (userHeightValue*userHeightValue))*10000;
-console.log(calculateBmi);
-
-
-if (calculateBmi < 18.5)
-message = 'you are underweight'
-else if (calculateBmi > 18.5 && calculateBmi<= 24.9)
-message = 'you are healthy'
-else
-message = 'you are overweight'
-
-
-showBmi.innerText = `${message} Your Calculated BMI is ${calculateBmi}`
-
-
-
+       document.getElementById('height-in-cm').value=''
+      document.getElementById('weight-in-kg').value =''
+          }
 
 })
+
+// const calculateBtn = document.getElementById('calculate-bmi')
+// const userHeight = document.getElementById('height-in-cm')
+// const userWeight = document.getElementById('weight-in-kg')
+
+
+
+// calculateBtn.addEventListener('click',()=>{
+//     message = 'please enter correct details'
+// let userHeightValue = userHeight.value.trim();
+// let userWeightValue = userWeight.value.trim();
+//   userHeight.value=''
+//   userWeight.value =''
+//   if(userHeightValue === "" || userWeightValue === "" || isNaN(userHeightValue) || isNaN(userWeightValue) ){
+//     showBmi.innerText = `${message}`
+
+//     return;
+  // }
+  // userHeightValue = Number(userHeightValue)
+  // userWeightValue = Number(userWeightValue)
+
+  // console.log(userHeightValue,userWeightValue);
+
+// })
 
  
   
